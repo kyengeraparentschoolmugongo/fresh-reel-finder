@@ -5,7 +5,6 @@ import { AppBar } from '@/components/navigation/app-bar';
 import { SideDrawer } from '@/components/navigation/side-drawer';
 import { activeBranch } from '@/components/navigation/nav-tree';
 import { RouteProgress } from '@/components/navigation/route-progress';
-import { WhatsAppChat } from '@/components/whatsapp-chat';
 import { SiteFooter } from '@/components/site-footer';
 
 export function LibraryShell({ children }: { children: ReactNode }) {
@@ -88,6 +87,5 @@ export function LibraryShell({ children }: { children: ReactNode }) {
     <AppBar triggerRef={trigger} menuExpanded={isMobile ? mobileOpen : !desktopClosed} installOpen={installOpen} onToggleMenu={toggle} onToggleInstall={toggleInstall} onCloseInstall={closeInstall} />
     <SideDrawer mobileOpen={mobileOpen} pathname={pathname} openPath={openPath} onClose={closeMobile} onCloseAndFocus={closeMobileAndFocus} onToggleBranch={toggleBranch} onNavigate={navigate} />
     <main className="library-content">{children}<SiteFooter /></main>
-    <WhatsAppChat />
   </div>;
 }

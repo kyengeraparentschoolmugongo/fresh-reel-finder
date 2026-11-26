@@ -45,3 +45,7 @@ use the editor.
 ## External GitHub Pages sync
 - Keep production-owned publishing tooling and workflows byte-for-byte during app sync, merging only the publishing commands into the incoming package manifest; this prevents source imports from breaking static deployment.
 - Validate sync preservation with `scripts/sync_from_lovable.py` and its Python regression tests before pushing a review branch; deployment stays a separate manual action so importing code cannot replace the live website.
+
+## Shared app navigation
+- Mount the bottom navigation and controlled WhatsApp dialog once in the root; this preserves Help state while switching library and movie pages.
+- Synchronize both sections through the shared theme hook and theme-change event, retaining legacy stored preferences; this keeps bottom theme actions effective across the app without leaking movie styling.

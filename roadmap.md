@@ -17,3 +17,7 @@
 - [x] Clear the fixed navigation on the featured carousel at mobile and desktop sizes.
 - [x] Link movie category headings to dedicated browsing pages with all available category titles.
 - [x] Verify category navigation and the featured layout in the browser and run movie regression tests.
+
+# Bottom navigation
+- [x] Add Library, Entertainment, Theme, and Help tabs across the app.
+- [x] Simplify top headers, preserve installation/search and WhatsApp behavior, and verify phone/desktop layouts.

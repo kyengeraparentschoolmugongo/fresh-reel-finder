@@ -1,8 +1,7 @@
 import { memo, useEffect, useRef, useState, type RefObject } from 'react';
-import { Download, Film, Menu, Search } from 'lucide-react';
+import { Download, Menu, Search } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from './theme-toggle';
 import { QuickSearch } from './quick-search';
 import { InstallCard } from './install-card';
 import { preloadLibrarySearch } from '@/lib/library-search';
@@ -48,9 +47,7 @@ export const AppBar = memo(function AppBar({ triggerRef, menuExpanded, installOp
     <Button ref={triggerRef} variant="source" size="source" className="library-icon-control" aria-label="Toggle class menu" aria-controls="library-navigation" aria-expanded={menuExpanded} onClick={onToggleMenu} title="Class menu"><Menu /></Button>
     <Button asChild variant="source" size="source" className="library-brand"><Link to="/"><span>FRESH TEACHER'S LIBRARY</span><span className="library-brand-caption" aria-label="Since COVID-19"><span aria-hidden="true">Since C<span className="library-brand-virus">🦠</span>VID-19</span></span></Link></Button>
     <div className="library-appbar-actions">
-      <Button asChild variant="source" size="source" className="library-icon-control" title="FreshFlix Movies"><Link to="/movies" aria-label="FreshFlix Movies"><Film /></Link></Button>
       <Button ref={searchTrigger} variant="source" size="source" className="library-icon-control library-search-control" aria-label="Search the library" aria-haspopup="dialog" aria-expanded={searchOpen} title={`Search the library (${shortcut})`} onPointerEnter={warmSearch} onFocus={warmSearch} onClick={() => { warmSearch(); onCloseInstall(); setSearchOpen(true); }}><Search /><kbd className="library-search-shortcut" aria-hidden="true">{shortcut}</kbd></Button>
-      <ThemeToggle />
       <Button variant="source" size="source" className="library-icon-control library-install-control" aria-label="Install the app" aria-haspopup="dialog" aria-expanded={installOpen} title="Install the app" onClick={onToggleInstall}><Download /></Button>
       <InstallCard open={installOpen} onClose={onCloseInstall} />
     </div>

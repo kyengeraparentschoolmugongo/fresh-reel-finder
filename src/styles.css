@@ -903,3 +903,44 @@ html.dark .homepage-brand, html.dark .homepage-brand * { color: var(--foreground
 html.dark a.africaVotesChat { background: var(--card) !important; border: 1px solid var(--border); }
 
 html.dark .library-search-shortcut { color: var(--foreground); }
+
+/* Shared, safe-area-aware navigation: fixed tracks keep all four tabs stable. */
+:root {
+  --app-bottom-nav-height: 72px;
+  --app-bottom-nav-space: calc(var(--app-bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+  --bottom-nav-surface: var(--footer-surface);
+  --bottom-nav-foreground: var(--footer-foreground);
+  --bottom-nav-muted: var(--footer-muted);
+  --bottom-nav-border: var(--footer-border);
+  --bottom-nav-active: oklch(0.4 0.1 165);
+  --bottom-nav-highlight: oklch(0.93 0.045 165);
+}
+.dark { --bottom-nav-active: oklch(0.86 0.11 165); --bottom-nav-highlight: oklch(0.32 0.055 165); }
+.library-shell, .freshflix-shell { padding-bottom: var(--app-bottom-nav-space); }
+.library-sidenav { bottom: var(--app-bottom-nav-space); }
+.app-bottom-nav {
+  position: fixed; inset: auto 0 0; z-index: 80;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--bottom-nav-surface); color: var(--bottom-nav-foreground);
+  border-top: 1px solid var(--bottom-nav-border); font-family: var(--font-sans); font-size: 14px;
+}
+.app-bottom-nav__inner { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: var(--app-bottom-nav-height); max-width: 640px; margin: 0 auto; }
+.app-bottom-nav .app-bottom-tab {
+  display: flex; flex-direction: column; justify-content: center; gap: 3px; min-width: 0; width: 100%;
+  padding: 5px 0; border: 0; border-radius: 0; background: transparent; color: var(--bottom-nav-muted);
+  font-size: 12px; line-height: 18px; font-weight: 600; letter-spacing: 0; text-decoration: none;
+}
+.app-bottom-tab__icon { display: flex; align-items: center; justify-content: center; width: 60px; height: 30px; border-radius: 20px; }
+.app-bottom-nav .app-bottom-tab svg { width: 23px; height: 23px; }
+.app-bottom-tab__icon .fa-whatsapp { font-size: 25px; }
+.app-bottom-nav .app-bottom-tab[data-active="true"] { color: var(--bottom-nav-active); }
+.app-bottom-tab[data-active="true"] .app-bottom-tab__icon, .app-bottom-tab:hover .app-bottom-tab__icon { background: var(--bottom-nav-highlight); color: var(--bottom-nav-active); }
+.app-bottom-nav .app-bottom-tab:focus-visible { outline: 2px solid var(--bottom-nav-active); outline-offset: -3px; }
+.whatsapp-chat #africavotes-chat { bottom: calc(var(--app-bottom-nav-space) + 12px); max-height: calc(100dvh - var(--app-bottom-nav-space) - 24px); overflow-y: auto; }
+@media (max-width: 767px) {
+  .library-appbar-actions { gap: 6px; }
+  .library-appbar .library-brand { max-width: none; }
+}
+/* Captured library CSS declares nav as block; keep the movie header horizontal after tab switching. */
+.freshflix-shell header > nav { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 20px; }
+@media (min-width: 640px) { .freshflix-shell header > nav { padding: 0 40px; } }
