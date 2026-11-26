@@ -9,7 +9,7 @@ import { applyTheme, nextTheme } from '@/lib/theme';
 export function BottomNav() {
   const pathname = useLocation({ select: location => location.pathname });
   const movies = pathname === '/movies' || pathname.startsWith('/movies/');
-  const theme = useAppTheme(movies);
+  const theme = useAppTheme();
   const [helpOpen, setHelpOpen] = useState(false);
   const helpTrigger = useRef<HTMLButtonElement>(null);
   const themeLabel = theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
@@ -30,6 +30,7 @@ export function BottomNav() {
         </Button>
       </div>
     </nav>
+    {helpOpen && <div className="app-help-backdrop" aria-hidden="true" onClick={() => setHelpOpen(false)} />}
     <WhatsAppChat open={helpOpen} onOpenChange={setHelpOpen} triggerRef={helpTrigger} />
   </>;
 }

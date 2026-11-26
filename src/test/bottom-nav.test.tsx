@@ -10,7 +10,7 @@ vi.mock('@tanstack/react-router', () => ({
   Link: ({ to, children, ...props }: { to: string; children?: React.ReactNode }) => <a href={to} {...props}>{children}</a>,
 }));
 afterEach(() => { cleanup(); localStorage.clear(); document.documentElement.classList.remove('dark'); location.pathname = '/'; });
-function MovieThemeProbe() { return <output aria-label="Movie theme">{useAppTheme(true)}</output>; }
+function MovieThemeProbe() { return <output aria-label="Movie theme">{useAppTheme()}</output>; }
 describe('Shared bottom navigation behavior', () => {
   it('uses the library homepage as the app launch and Library destination', () => {
     render(<BottomNav />);
@@ -52,4 +52,9 @@ describe('Shared bottom navigation behavior', () => {
     act(() => applyTheme('light'));
     expect(screen.getByLabelText('Movie theme')).toHaveTextContent('light');
   });
+});
+
+it('movie section defaults to light theme with no saved preference', () => {
+  localStorage.clear(); render(<MovieThemeProbe />);
+  expect(screen.getByLabelText('Movie theme')).toHaveTextContent('light');
 });

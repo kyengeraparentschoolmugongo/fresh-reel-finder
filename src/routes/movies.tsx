@@ -19,7 +19,7 @@ export const Route = createFileRoute("/movies")({
 
 function MovieLayout() {
   const loading = useRouterState({ select: (state) => state.isLoading });
-  const dark = useAppTheme(true) === 'dark';
+  const dark = useAppTheme() === 'dark';
 
   return (
     <div className={`freshflix-shell${dark ? "" : " freshflix-light"}`}>

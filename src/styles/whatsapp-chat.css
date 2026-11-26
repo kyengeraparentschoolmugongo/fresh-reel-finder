@@ -78,3 +78,5 @@
 @media (prefers-reduced-motion: reduce) {
   .whatsapp-chat .encryption-modal { animation: none; }
 }
+.app-help-backdrop { position: fixed; inset: 0; z-index: 2002; background: oklch(0 0 0 / 45%); backdrop-filter: blur(2px); }
+.whatsapp-chat #africavotes-chat { animation-duration: .25s; bottom: calc(84px + env(safe-area-inset-bottom)); }
