@@ -3,7 +3,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { homepageShelves, homepageClassNames } from '@/data/homepage-shelves';
 import repairCSS from '../styles/import-repairs.css?raw';
-import capturedCssUrl from '../styles/captured.css?url';
 import { jsonLd, LOGO_URL, pageMeta, SITE_NAME, SITE_URL } from '@/lib/site';
 
 // Read by search engines and screen readers; the door animation stays the visible first screen.
@@ -19,7 +18,7 @@ export const Route = createFileRoute("/")({
     });
     return {
       meta: page.meta,
-      links: [...page.links, { rel: "stylesheet", href: capturedCssUrl }],
+      links: page.links,
       scripts: [jsonLd({
         '@context': 'https://schema.org',
         '@graph': [

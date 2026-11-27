@@ -49,3 +49,6 @@ use the editor.
 ## Shared app navigation
 - Mount the bottom navigation and controlled WhatsApp dialog once in the root; this preserves Help state while switching library and movie pages.
 - Synchronize both sections through the shared theme hook and theme-change event, retaining legacy stored preferences; this keeps bottom theme actions effective across the app without leaking movie styling.
+
+## Page stylesheets
+- Never link unscoped legacy stylesheets from a route; scope the few rules a page needs under its wrapper class (e.g. `.library-homepage` in import-repairs.css), because client navigation keeps route `<link>` tags and their global resets break other sections.
