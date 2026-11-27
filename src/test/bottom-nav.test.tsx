@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { BottomNav } from '@/components/navigation/bottom-nav';
-import { applyTheme } from '@/lib/theme';
+import { applyTheme, themeBootstrap } from '@/lib/theme';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import manifest from '../../public/manifest.webmanifest?raw';
 const location = vi.hoisted(() => ({ pathname: '/' }));
@@ -23,17 +23,18 @@ describe('Shared bottom navigation behavior', () => {
     expect(screen.getByRole('link', { name: 'Entertainment' })).toHaveAttribute('href', '/movies');
     expect(screen.getByRole('link', { name: 'Entertainment' })).toHaveAttribute('aria-current', 'page');
   });
-  it('applies the bottom theme action to both sections and retains it after remount', () => {
+  it('starts in dark mode and applies the bottom theme action to both sections, retaining it after remount', () => {
     render(<><BottomNav /><MovieThemeProbe /></>);
-    fireEvent.click(screen.getByRole('button', { name: 'Switch to dark theme' }));
-    expect(document.documentElement).toHaveClass('dark');
     expect(screen.getByLabelText('Movie theme')).toHaveTextContent('dark');
-    expect(localStorage.getItem('ft-theme')).toBe('dark');
-    expect(localStorage.getItem('freshflix-theme')).toBe('dark');
-    cleanup(); location.pathname = '/movies'; render(<><BottomNav /><MovieThemeProbe /></>);
     fireEvent.click(screen.getByRole('button', { name: 'Switch to light theme' }));
     expect(document.documentElement).not.toHaveClass('dark');
     expect(screen.getByLabelText('Movie theme')).toHaveTextContent('light');
+    expect(localStorage.getItem('ft-theme')).toBe('light');
+    expect(localStorage.getItem('freshflix-theme')).toBe('light');
+    cleanup(); location.pathname = '/movies'; render(<><BottomNav /><MovieThemeProbe /></>);
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to dark theme' }));
+    expect(document.documentElement).toHaveClass('dark');
+    expect(screen.getByLabelText('Movie theme')).toHaveTextContent('dark');
   });
   it('opens Help, preserves the drafted message and WhatsApp destination, and restores focus when closed', () => {
     render(<BottomNav />); const help = screen.getByRole('button', { name: 'WhatsApp Help' });
@@ -54,7 +55,19 @@ describe('Shared bottom navigation behavior', () => {
   });
 });
 
-it('movie section defaults to light theme with no saved preference', () => {
+it('defaults to dark theme with no saved preference in either section', () => {
   localStorage.clear(); render(<MovieThemeProbe />);
-  expect(screen.getByLabelText('Movie theme')).toHaveTextContent('light');
+  expect(screen.getByLabelText('Movie theme')).toHaveTextContent('dark');
+  cleanup(); render(<BottomNav />);
+  expect(screen.getByRole('button', { name: 'Switch to light theme' })).toBeInTheDocument();
+});
+
+it('boots dark mode before paint unless the saved preference is light', () => {
+  localStorage.clear();
+  new Function(themeBootstrap)();
+  expect(document.documentElement).toHaveClass('dark');
+  localStorage.setItem('ft-theme', 'light');
+  document.documentElement.classList.remove('dark');
+  new Function(themeBootstrap)();
+  expect(document.documentElement).not.toHaveClass('dark');
 });

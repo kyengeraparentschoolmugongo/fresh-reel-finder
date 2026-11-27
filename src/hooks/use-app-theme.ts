@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { THEME_KEY, type Theme } from '@/lib/theme';
 
-export function useAppTheme(defaultDark = false) {
+export function useAppTheme(defaultDark = true) {
   const [theme, setTheme] = useState<Theme>(defaultDark ? 'dark' : 'light');
   useEffect(() => {
     const sync = () => {
