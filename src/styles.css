@@ -672,7 +672,7 @@
 a, button, [role="button"], summary, label { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 
 /* Page navigation feedback: top progress bar + instant press state */
-.route-progress { position: fixed; top: 0; left: 0; height: 3px; z-index: 10000; pointer-events: none; background: var(--primary, currentColor); box-shadow: 0 0 6px var(--primary, currentColor); }
+.route-progress { position: fixed; top: 0; left: 0; height: 4px; z-index: 10000; pointer-events: none; background: var(--bottom-nav-active); box-shadow: 0 0 6px var(--bottom-nav-active); }
 .route-progress.is-active { animation: route-progress-grow 2.5s cubic-bezier(.1,.7,.3,1) forwards; }
 .route-progress.is-done { width: 100%; opacity: 0; transition: opacity 200ms ease; }
 @keyframes route-progress-grow { from { width: 0; } to { width: 85%; } }
@@ -936,6 +936,7 @@ html.dark .library-search-shortcut { color: var(--foreground); }
 .app-bottom-nav .app-bottom-tab[data-active="true"] { color: var(--bottom-nav-active); }
 .app-bottom-tab[data-active="true"] .app-bottom-tab__icon, .app-bottom-tab:hover .app-bottom-tab__icon { background: var(--bottom-nav-highlight); color: var(--bottom-nav-active); }
 .app-bottom-nav .app-bottom-tab:focus-visible { outline: 2px solid var(--bottom-nav-active); outline-offset: -3px; }
+.app-bottom-tab:active .app-bottom-tab__icon { background: var(--bottom-nav-highlight); color: var(--bottom-nav-active); }
 .whatsapp-chat #africavotes-chat { bottom: calc(var(--app-bottom-nav-space) + 12px); max-height: calc(100dvh - var(--app-bottom-nav-space) - 24px); overflow-y: auto; }
 @media (max-width: 767px) {
   .library-appbar-actions { gap: 6px; }

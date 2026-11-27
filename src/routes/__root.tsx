@@ -22,6 +22,7 @@ import appleIcon from '../../public/icons/badge-apple-touch-icon.png.asset.json'
 import { adsenseBootstrap } from '@/lib/adsense';
 import { themeBootstrap } from '@/lib/theme';
 import { BottomNav } from '@/components/navigation/bottom-nav';
+import { RouteProgress } from '@/components/navigation/route-progress';
 
 function NotFoundComponent() {
   return <NotFoundPage />;
@@ -145,6 +146,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <RouteProgress />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       {movieSection ? <Outlet /> : <LibraryShell><Outlet /></LibraryShell>}
       <BottomNav />

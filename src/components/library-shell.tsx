@@ -4,7 +4,6 @@ import menu from '@/data/navigation/menu.json';
 import { AppBar } from '@/components/navigation/app-bar';
 import { SideDrawer } from '@/components/navigation/side-drawer';
 import { activeBranch } from '@/components/navigation/nav-tree';
-import { RouteProgress } from '@/components/navigation/route-progress';
 import { SiteFooter } from '@/components/site-footer';
 
 export function LibraryShell({ children }: { children: ReactNode }) {
@@ -83,7 +82,6 @@ export function LibraryShell({ children }: { children: ReactNode }) {
     else setDesktopClosed(value => !value);
   }, []);
   return <div onClick={interceptLinks} onPointerOver={preloadLink} onTouchStart={preloadLink} className={`library-shell ${mobileOpen ? 'library-mobile-open' : ''} ${desktopClosed ? 'library-desktop-closed' : ''}`}>
-    <RouteProgress />
     <AppBar triggerRef={trigger} menuExpanded={isMobile ? mobileOpen : !desktopClosed} installOpen={installOpen} onToggleMenu={toggle} onToggleInstall={toggleInstall} onCloseInstall={closeInstall} />
     <SideDrawer mobileOpen={mobileOpen} pathname={pathname} openPath={openPath} onClose={closeMobile} onCloseAndFocus={closeMobileAndFocus} onToggleBranch={toggleBranch} onNavigate={navigate} />
     <main className="library-content">{children}<SiteFooter /></main>

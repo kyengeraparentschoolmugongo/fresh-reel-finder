@@ -5,13 +5,29 @@ import { applyTheme, themeBootstrap } from '@/lib/theme';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import manifest from '../../public/manifest.webmanifest?raw';
 const location = vi.hoisted(() => ({ pathname: '/' }));
+const navigation = vi.hoisted(() => ({ status: 'idle', isLoading: false, location: { pathname: '/' } }));
 vi.mock('@tanstack/react-router', () => ({
   useLocation: ({ select }: { select: (value: typeof location) => string }) => select(location),
-  Link: ({ to, children, ...props }: { to: string; children?: React.ReactNode }) => <a href={to} {...props}>{children}</a>,
+  useRouterState: ({ select }: { select: (value: typeof navigation) => unknown }) => select(navigation),
+  Link: ({ to, children, preload: _preload, ...props }: { to: string; children?: React.ReactNode; preload?: string }) => <a href={to} {...props}>{children}</a>,
 }));
-afterEach(() => { cleanup(); localStorage.clear(); document.documentElement.classList.remove('dark'); location.pathname = '/'; });
+afterEach(() => { cleanup(); localStorage.clear(); document.documentElement.classList.remove('dark'); location.pathname = '/'; navigation.status = 'idle'; navigation.isLoading = false; navigation.location.pathname = '/'; });
 function MovieThemeProbe() { return <output aria-label="Movie theme">{useAppTheme()}</output>; }
 describe('Shared bottom navigation behavior', () => {
+  it('signals the destination while Entertainment loads and clears when settled', () => {
+    navigation.status = 'pending'; navigation.location.pathname = '/movies';
+    const { rerender } = render(<BottomNav />);
+    expect(screen.getByRole('link', { name: 'Entertainment' })).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getByRole('link', { name: 'Library' })).toHaveAttribute('aria-busy', 'false');
+    navigation.status = 'idle'; location.pathname = '/movies'; rerender(<BottomNav />);
+    expect(screen.getByRole('link', { name: 'Entertainment' })).toHaveAttribute('aria-busy', 'false');
+  });
+  it('signals Library during the return trip', () => {
+    location.pathname = '/movies'; navigation.status = 'pending'; navigation.location.pathname = '/';
+    render(<BottomNav />);
+    expect(screen.getByRole('link', { name: 'Library' })).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getByRole('link', { name: 'Entertainment' })).toHaveAttribute('aria-busy', 'false');
+  });
   it('uses the library homepage as the app launch and Library destination', () => {
     render(<BottomNav />);
     expect(JSON.parse(manifest).start_url).toBe('/');

@@ -8,10 +8,14 @@ import { featuredSlides, uniqueRows } from "@/lib/movies/media-browsing";
 import { LandscapeRow } from "@/components/movies/LandscapeCard";
 import { ExploreMoreGrid, VjFilterBar, VjMoviesGrid } from "@/components/movies/HomeInfiniteGrid";
 import { AdSenseBanner } from "@/components/movies/AdSenseBanner";
+import { MovieHomePending } from "@/components/movies/home-pending";
 
 export const Route = createFileRoute("/movies/")({
   staticData: { sitemap: false },
   loader: ({ context }) => context.queryClient.ensureQueryData(homeQuery),
+  pendingMs: 0,
+  pendingMinMs: 150,
+  pendingComponent: MovieHomePending,
   head: ({ loaderData }) => ({
     meta: [
       { title: "FRESHFLIX — Discover movies and TV shows" },

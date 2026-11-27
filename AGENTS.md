@@ -47,6 +47,7 @@ use the editor.
 - Validate sync preservation with `scripts/sync_from_lovable.py` and its Python regression tests before pushing a review branch; deployment stays a separate manual action so importing code cannot replace the live website.
 
 ## Shared app navigation
+- Keep navigation progress at the root and derive pending tab feedback from router state; route-native pending views and intent preloading provide feedback without duplicate navigation state.
 - Mount the bottom navigation and controlled WhatsApp dialog once in the root; this preserves Help state while switching library and movie pages.
 - Synchronize both sections through the shared theme hook and theme-change event, retaining legacy stored preferences; this keeps bottom theme actions effective across the app without leaking movie styling.
 

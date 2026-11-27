@@ -21,3 +21,7 @@
 # Bottom navigation
 - [x] Add Library, Entertainment, Theme, and Help tabs across the app.
 - [x] Simplify top headers, preserve installation/search and WhatsApp behavior, and verify phone/desktop layouts.
+
+# Page-switching feedback
+- [ ] Add pending tab feedback, intent preloading, movie placeholders, and a root-level progress bar.
+- [ ] Verify delayed and cached navigation on mobile and desktop and run navigation tests.
